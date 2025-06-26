@@ -1,6 +1,12 @@
 
 import React from 'react';
 import { BidItem, BidGroup } from '@/types/bidTypes';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface BidSheetTableProps {
   data: BidGroup[];
@@ -19,8 +25,8 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
   };
 
   // Column header component to reuse
-  const ColumnHeaders = ({ isSticky = false }: { isSticky?: boolean }) => (
-    <tr className={`bg-blue-50 ${isSticky ? 'sticky top-16' : ''} print:static`}>
+  const ColumnHeaders = () => (
+    <tr className="bg-blue-50">
       <th className="border border-gray-300 px-3 py-1.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-8">
         #
       </th>
@@ -43,19 +49,17 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
   );
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
-        {/* Table header */}
-        <thead className="bg-blue-50 sticky top-16 print:static">
-          <ColumnHeaders isSticky={true} />
-        </thead>
-
-        <tbody>
-          {data.map((group, groupIndex) => (
-            <React.Fragment key={group.id}>
-              {/* Group header */}
-              <tr className="bg-gray-100 print:break-inside-avoid">
-                <td colSpan={6} className="border border-gray-300 px-3 py-3">
+    <div className="space-y-4">
+      <Accordion 
+        type="multiple" 
+        defaultValue={data.map(group => group.id)} 
+        className="space-y-4"
+      >
+        {data.map((group, groupIndex) => (
+          <AccordionItem key={group.id} value={group.id} className="border rounded-lg">
+            <AccordionTrigger className="px-4 py-3 bg-gray-100 hover:bg-gray-150 rounded-t-lg [&[data-state=closed]]:rounded-lg">
+              <div className="flex justify-between items-center w-full mr-4">
+                <div className="text-left">
                   <div className="font-semibold text-gray-800 text-sm uppercase">
                     {group.category}
                   </div>
@@ -64,76 +68,72 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
                       {group.description}
                     </div>
                   )}
-                </td>
-              </tr>
+                </div>
+                <div className="text-sm font-semibold text-gray-700">
+                  Subtotal: {formatCurrency(group.subtotal)}
+                </div>
+              </div>
+            </AccordionTrigger>
+            
+            <AccordionContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  {/* Column headers for this group */}
+                  <thead>
+                    <ColumnHeaders />
+                  </thead>
+                  
+                  <tbody>
+                    {/* Group items */}
+                    {group.items.map((item, itemIndex) => (
+                      <tr
+                        key={item.id}
+                        className="hover:bg-gray-50 print:break-inside-avoid"
+                      >
+                        <td className="border border-gray-300 px-3 py-2 text-sm text-gray-600">
+                          {groupIndex + 1}.{itemIndex + 1}
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2">
+                          <div className="text-sm font-medium text-gray-900">
+                            {item.name}
+                          </div>
+                          {item.specification && (
+                            <div className="text-xs text-gray-600 mt-1">
+                              {item.specification}
+                            </div>
+                          )}
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-center">
+                          {item.quantity}
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-center">
+                          {item.unit}
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-right">
+                          {formatCurrency(item.unitPrice)}
+                        </td>
+                        <td className="border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-900 text-right">
+                          {formatCurrency(item.quantity * item.unitPrice)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
 
-              {/* Column headers for this group */}
-              <ColumnHeaders />
-
-              {/* Group items */}
-              {group.items.map((item, itemIndex) => (
-                <tr
-                  key={item.id}
-                  className="hover:bg-gray-50 print:break-inside-avoid"
-                >
-                  <td className="border border-gray-300 px-3 py-2 text-sm text-gray-600">
-                    {groupIndex + 1}.{itemIndex + 1}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2">
-                    <div className="text-sm font-medium text-gray-900">
-                      {item.name}
-                    </div>
-                    {item.specification && (
-                      <div className="text-xs text-gray-600 mt-1">
-                        {item.specification}
-                      </div>
-                    )}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-center">
-                    {item.quantity}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-center">
-                    {item.unit}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2 text-sm text-gray-900 text-right">
-                    {formatCurrency(item.unitPrice)}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-900 text-right">
-                    {formatCurrency(item.quantity * item.unitPrice)}
-                  </td>
-                </tr>
-              ))}
-
-              {/* Group subtotal */}
-              <tr className="bg-blue-25 print:break-inside-avoid">
-                <td colSpan={5} className="border border-gray-300 px-3 py-2 text-sm font-semibold text-gray-700 text-right">
-                  {group.category} Subtotal:
-                </td>
-                <td className="border border-gray-300 px-3 py-2 text-sm font-bold text-gray-900 text-right bg-blue-50">
-                  {formatCurrency(group.subtotal)}
-                </td>
-              </tr>
-
-              {/* Add spacing between groups */}
-              {groupIndex < data.length - 1 && (
-                <tr className="print:break-inside-avoid">
-                  <td colSpan={6} className="py-2"></td>
-                </tr>
-              )}
-            </React.Fragment>
-          ))}
-
-          {/* Grand total */}
-          <tr className="bg-blue-600 text-white print:break-inside-avoid">
-            <td colSpan={5} className="border border-blue-600 px-3 py-4 text-lg font-bold text-right">
-              GRAND TOTAL:
-            </td>
-            <td className="border border-blue-600 px-3 py-4 text-lg font-bold text-right">
-              {formatCurrency(calculateGrandTotal())}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {/* Grand total */}
+      <div className="mt-8">
+        <div className="bg-blue-600 text-white rounded-lg p-4 print:break-inside-avoid">
+          <div className="flex justify-between items-center">
+            <span className="text-lg font-bold">GRAND TOTAL:</span>
+            <span className="text-lg font-bold">{formatCurrency(calculateGrandTotal())}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
