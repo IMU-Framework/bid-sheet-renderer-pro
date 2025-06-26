@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -99,5 +100,88 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Print-specific styles for A4 layout */
+@media print {
+  @page {
+    size: A4;
+    margin: 0.5in;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+    color: black !important;
+    background: white !important;
+  }
+
+  .print\:shadow-none {
+    box-shadow: none !important;
+  }
+
+  .print\:border-none {
+    border: none !important;
+  }
+
+  .print\:hidden {
+    display: none !important;
+  }
+
+  .print\:static {
+    position: static !important;
+  }
+
+  .print\:break-inside-avoid {
+    break-inside: avoid;
+  }
+
+  .print\:p-8 {
+    padding: 2rem !important;
+  }
+
+  .print\:mb-12 {
+    margin-bottom: 3rem !important;
+  }
+
+  .print\:fixed {
+    position: fixed !important;
+  }
+
+  .print\:bottom-8 {
+    bottom: 2rem !important;
+  }
+
+  .print\:left-8 {
+    left: 2rem !important;
+  }
+
+  .print\:right-8 {
+    right: 2rem !important;
+  }
+
+  /* Ensure table styling is preserved in print */
+  table {
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #333 !important;
+    padding: 8px !important;
+  }
+
+  th {
+    background-color: #f3f4f6 !important;
+    font-weight: bold !important;
+  }
+
+  /* Landscape orientation support */
+  .print\:rotate-90 {
+    transform: rotate(90deg) !important;
+  }
+
+  .print\:origin-center {
+    transform-origin: center !important;
   }
 }
