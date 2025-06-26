@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { BidItem, BidGroup } from '@/types/bidTypes';
 
 interface BidSheetTableProps {
@@ -17,31 +18,36 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
     return data.reduce((total, group) => total + group.subtotal, 0);
   };
 
+  // Column header component to reuse
+  const ColumnHeaders = ({ isSticky = false }: { isSticky?: boolean }) => (
+    <tr className={`bg-blue-50 ${isSticky ? 'sticky top-16' : ''} print:static`}>
+      <th className="border border-gray-300 px-3 py-1.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-8">
+        #
+      </th>
+      <th className="border border-gray-300 px-3 py-1.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+        Item Description
+      </th>
+      <th className="border border-gray-300 px-3 py-1.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
+        Qty
+      </th>
+      <th className="border border-gray-300 px-3 py-1.5 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
+        Unit
+      </th>
+      <th className="border border-gray-300 px-3 py-1.5 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
+        Unit Price
+      </th>
+      <th className="border border-gray-300 px-3 py-1.5 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-28">
+        Total
+      </th>
+    </tr>
+  );
+
   return (
     <div className="overflow-x-auto">
       <table className="w-full border-collapse">
         {/* Table header */}
         <thead className="bg-blue-50 sticky top-16 print:static">
-          <tr>
-            <th className="border border-gray-300 px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-8">
-              #
-            </th>
-            <th className="border border-gray-300 px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-              Item Description
-            </th>
-            <th className="border border-gray-300 px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
-              Qty
-            </th>
-            <th className="border border-gray-300 px-3 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider w-16">
-              Unit
-            </th>
-            <th className="border border-gray-300 px-3 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-24">
-              Unit Price
-            </th>
-            <th className="border border-gray-300 px-3 py-3 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider w-28">
-              Total
-            </th>
-          </tr>
+          <ColumnHeaders isSticky={true} />
         </thead>
 
         <tbody>
@@ -60,6 +66,9 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
                   )}
                 </td>
               </tr>
+
+              {/* Column headers for this group */}
+              <ColumnHeaders />
 
               {/* Group items */}
               {group.items.map((item, itemIndex) => (
@@ -128,8 +137,5 @@ const BidSheetTable = ({ data }: BidSheetTableProps) => {
     </div>
   );
 };
-
-// Add React import since we're using React.Fragment
-import React from 'react';
 
 export default BidSheetTable;
