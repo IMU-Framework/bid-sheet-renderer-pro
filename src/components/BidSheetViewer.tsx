@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -87,16 +86,12 @@ const BidSheetViewer = () => {
 
       {/* Main content */}
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none`}>
+        <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none page`}>
           <div className="p-6 print:p-4">
             {/* Document header */}
-            <div className="mb-6 print:mb-8">
-              <div className="text-left border-b-2 border-blue-600 pb-4">
-                <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'} mb-2`}>
-                  CONSTRUCTION BID SPECIFICATION
-                </h1>
+            <div className="mb-4 print:mb-6">
+              <div className="text-left border-b-2 border-blue-600 pb-3 print:break-inside-avoid">
                 <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-1`}>
-                  <p><strong>Project:</strong> Modern Office Renovation - Phase 1</p>
                   <p><strong>Location:</strong> 123 Business District, Downtown</p>
                   <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
                   <p><strong>Prepared by:</strong> ABC Construction Co.</p>
@@ -109,8 +104,8 @@ const BidSheetViewer = () => {
             </div>
 
             {/* Grand total - moved before first group with reduced height */}
-            <div className="mb-6">
-              <div className="bg-blue-600 text-white rounded-lg p-3 print:bg-black print:text-white print:border print:border-black">
+            <div className="mb-4 print:break-inside-avoid">
+              <div className="bg-blue-600 text-white rounded-lg p-2 print:bg-black print:text-white print:border print:border-black">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>
                   <span className="text-lg font-bold">{formatCurrency(calculateGrandTotal())}</span>
@@ -119,7 +114,9 @@ const BidSheetViewer = () => {
             </div>
 
             {/* Bid table */}
-            <BidSheetTable data={mockBidData} darkMode={darkMode} />
+            <div className="print:break-inside-avoid">
+              <BidSheetTable data={mockBidData} darkMode={darkMode} />
+            </div>
           </div>
         </Card>
       </div>
