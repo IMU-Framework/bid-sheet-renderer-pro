@@ -1,12 +1,27 @@
-import { useState } from 'react';
+
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Printer, Download, RefreshCw, Sun } from 'lucide-react';
 import BidSheetTable from './BidSheetTable';
+import BidSheetFilter from './BidSheetFilter';
 import { mockBidData } from '@/data/mockBidData';
 
 const BidSheetViewer = () => {
   const [darkMode, setDarkMode] = useState(false);
+  
+  // Get all unique categories from the data
+  const allCategories = useMemo(() => {
+    return [...new Set(mockBidData.map(group => group.category))];
+  }, []);
+  
+  // Initialize with all categories selected
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(allCategories);
+  
+  // Filter data based on selected categories
+  const filteredData = useMemo(() => {
+    return mockBidData.filter(group => selectedCategories.includes(group.category));
+  }, [selectedCategories]);
 
   const handlePrint = () => {
     window.print();
@@ -26,14 +41,24 @@ const BidSheetViewer = () => {
     setDarkMode(!darkMode);
   };
 
+  const handleCategoryChange = (category: string, checked: boolean) => {
+    if (checked) {
+      setSelectedCategories(prev => [...prev, category]);
+    } else {
+      setSelectedCategories(prev => prev.filter(cat => cat !== category));
+    }
+  };
+
   const calculateGrandTotal = () => {
-    return mockBidData.reduce((total, group) => total + group.subtotal, 0);
+    return filteredData.reduce((total, group) => total + group.subtotal, 0);
   };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
     }).format(amount);
   };
 
@@ -44,6 +69,13 @@ const BidSheetViewer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-end items-center h-12">
             <div className="flex items-center space-x-2">
+              <BidSheetFilter
+                categories={allCategories}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                darkMode={darkMode}
+              />
+              
               <Button
                 variant="ghost"
                 size="icon"
@@ -115,7 +147,7 @@ const BidSheetViewer = () => {
 
             {/* Bid table */}
             <div className="print:break-inside-avoid">
-              <BidSheetTable data={mockBidData} darkMode={darkMode} />
+              <BidSheetTable data={filteredData} darkMode={darkMode} />
             </div>
           </div>
         </Card>

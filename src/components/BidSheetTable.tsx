@@ -15,28 +15,32 @@ interface BidSheetTableProps {
 
 const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-US', {
+    // Remove trailing zeroes by converting to number then back to formatted string
+    const formatted = new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
     }).format(amount);
+    return formatted;
   };
 
   // Mobile column headers (without Unit column)
   const MobileColumnHeaders = () => (
     <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-      <th className={`border border-gray-400 px-1 py-1 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
         #
       </th>
-      <th className={`border border-gray-400 px-1 py-1 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
         Item Description
       </th>
-      <th className={`border border-gray-400 px-1 py-1 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
         Qty
       </th>
-      <th className={`border border-gray-400 px-1 py-1 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
         Unit Price
       </th>
-      <th className={`border border-gray-400 px-1 py-1 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
         Total
       </th>
     </tr>
@@ -45,22 +49,22 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
   // Desktop column headers (with Unit column)
   const DesktopColumnHeaders = () => (
     <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-      <th className={`border border-gray-400 px-3 py-1.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
         #
       </th>
-      <th className={`border border-gray-400 px-3 py-1.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
         Item Description
       </th>
-      <th className={`border border-gray-400 px-3 py-1.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
         Qty
       </th>
-      <th className={`border border-gray-400 px-3 py-1.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
         Unit
       </th>
-      <th className={`border border-gray-400 px-3 py-1.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
         Unit Price
       </th>
-      <th className={`border border-gray-400 px-3 py-1.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-28 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-28 print:border-gray-600`}>
         Total
       </th>
     </tr>
@@ -113,7 +117,7 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
                         key={item.id}
                         className={`${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} print:break-inside-avoid`}
                       >
-                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:border-gray-400 print:text-black`}>
+                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:border-gray-400 print:text-black text-center`}>
                           {groupIndex + 1}.{itemIndex + 1}
                         </td>
                         <td className={`border border-gray-300 px-1 md:px-3 py-2 print:border-gray-400`}>
@@ -137,10 +141,10 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
                         <td className={`border border-gray-300 px-3 py-2 text-sm ${darkMode ? 'text-gray-200' : 'text-gray-900'} text-center hidden md:table-cell print:table-cell print:text-black print:border-gray-400`}>
                           {item.unit}
                         </td>
-                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm ${darkMode ? 'text-gray-200' : 'text-gray-900'} text-right print:border-gray-400 print:text-black`}>
+                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm ${darkMode ? 'text-gray-200' : 'text-gray-900'} print:text-black text-right print:border-gray-400`}>
                           {formatCurrency(item.unitPrice)}
                         </td>
-                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-900'} text-right print:border-gray-400 print:text-black`}>
+                        <td className={`border border-gray-300 px-1 md:px-3 py-2 text-sm font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-900'} print:text-black text-right print:border-gray-400`}>
                           {formatCurrency(item.quantity * item.unitPrice)}
                         </td>
                       </tr>
