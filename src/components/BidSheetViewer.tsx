@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import { Printer, Download, RefreshCw, Sun, Moon } from 'lucide-react';
+import { Printer, Download, RefreshCw, Sun } from 'lucide-react';
 import BidSheetTable from './BidSheetTable';
 import { mockBidData } from '@/data/mockBidData';
 
@@ -22,6 +21,10 @@ const BidSheetViewer = () => {
   const handleRefresh = () => {
     // Will implement clear cache and reload functionality later
     window.location.reload();
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
   };
 
   const calculateGrandTotal = () => {
@@ -49,45 +52,43 @@ const BidSheetViewer = () => {
                 Project: Modern Office Renovation
               </p>
             </div>
-            <div className="flex items-center space-x-4">
-              {/* Dark mode toggle */}
-              <div className="flex items-center space-x-2">
-                <Sun className={`h-4 w-4 ${darkMode ? 'text-gray-400' : 'text-yellow-500'}`} />
-                <Switch
-                  checked={darkMode}
-                  onCheckedChange={setDarkMode}
-                />
-                <Moon className={`h-4 w-4 ${darkMode ? 'text-blue-400' : 'text-gray-400'}`} />
-              </div>
+            
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleDarkMode}
+                className="flex items-center justify-center"
+              >
+                <Sun className={`h-4 w-4 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />
+              </Button>
               
-              <div className="flex space-x-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleRefresh}
-                  className="flex items-center gap-2"
-                >
-                  <RefreshCw className="h-4 w-4" />
-                  Refresh
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDownload}
-                  className="flex items-center gap-2"
-                >
-                  <Download className="h-4 w-4" />
-                  Download
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={handlePrint}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
-                >
-                  <Printer className="h-4 w-4" />
-                  Print
-                </Button>
-              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleRefresh}
+                className="flex items-center justify-center"
+              >
+                <RefreshCw className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleDownload}
+                className="flex items-center justify-center"
+              >
+                <Download className="h-4 w-4" />
+              </Button>
+              
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handlePrint}
+                className="flex items-center justify-center"
+              >
+                <Printer className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
@@ -116,9 +117,9 @@ const BidSheetViewer = () => {
               </div>
             </div>
 
-            {/* Grand total - moved before first group */}
+            {/* Grand total - moved before first group with reduced height */}
             <div className="mb-6">
-              <div className="bg-blue-600 text-white rounded-lg p-4 print:bg-black print:text-white print:border print:border-black">
+              <div className="bg-blue-600 text-white rounded-lg p-3 print:bg-black print:text-white print:border print:border-black">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>
                   <span className="text-lg font-bold">{formatCurrency(calculateGrandTotal())}</span>
