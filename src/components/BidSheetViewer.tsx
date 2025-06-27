@@ -43,16 +43,7 @@ const BidSheetViewer = () => {
       {/* Header with controls */}
       <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-left">
-              <h1 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                Construction Bid Sheet
-              </h1>
-              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                Project: Modern Office Renovation
-              </p>
-            </div>
-            
+          <div className="flex justify-end items-center h-12">
             <div className="flex items-center space-x-2">
               <Button
                 variant="ghost"
@@ -69,7 +60,7 @@ const BidSheetViewer = () => {
                 onClick={handleRefresh}
                 className="flex items-center justify-center"
               >
-                <RefreshCw className="h-4 w-4" />
+                <RefreshCw className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
               </Button>
               
               <Button
@@ -78,7 +69,7 @@ const BidSheetViewer = () => {
                 onClick={handleDownload}
                 className="flex items-center justify-center"
               >
-                <Download className="h-4 w-4" />
+                <Download className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
               </Button>
               
               <Button
@@ -87,7 +78,7 @@ const BidSheetViewer = () => {
                 onClick={handlePrint}
                 className="flex items-center justify-center"
               >
-                <Printer className="h-4 w-4" />
+                <Printer className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
               </Button>
             </div>
           </div>

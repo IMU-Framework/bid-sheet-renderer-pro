@@ -103,18 +103,41 @@
   }
 }
 
-/* Print-specific styles for A4 layout */
+/* Print-specific styles for A4 layout - applies to ALL devices */
 @media print {
   @page {
-    size: A4;
-    margin: 0.3in; /* Narrower margins */
+    size: A4 !important;
+    margin: 0.3in !important; /* Narrower margins */
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   body {
-    font-size: 12pt;
-    line-height: 1.4;
+    font-size: 12pt !important;
+    line-height: 1.4 !important;
     color: black !important;
     background: white !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Force A4 on mobile devices */
+  @media (max-width: 768px) {
+    @page {
+      size: A4 portrait !important;
+      margin: 0.3in !important;
+    }
+    
+    body {
+      transform: scale(1) !important;
+      transform-origin: top left !important;
+      width: 210mm !important;
+      min-height: 297mm !important;
+    }
   }
 
   .print\:shadow-none {
@@ -187,6 +210,7 @@
     background-color: #f3f4f6 !important;
     font-weight: bold !important;
     border: 1px solid #4b5563 !important; /* Bolder header border */
+    color: black !important;
   }
 
   /* Grand total better contrast */
