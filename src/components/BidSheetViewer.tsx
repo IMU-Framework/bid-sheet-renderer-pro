@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Printer, Download, RefreshCw, Sun, Filter } from 'lucide-react';
+import { Printer, Download, RefreshCw, Moon, Sun } from 'lucide-react';
 import BidSheetTable from './BidSheetTable';
 import BidSheetFilter from './BidSheetFilter';
 import { mockBidData } from '@/data/mockBidData';
@@ -63,9 +63,9 @@ const BidSheetViewer = () => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
       {/* Header with controls */}
-      <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 print:hidden`}>
+      <div className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             {/* Mobile: Filter on left */}
@@ -95,36 +95,40 @@ const BidSheetViewer = () => {
                 variant="ghost"
                 size="icon"
                 onClick={toggleDarkMode}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <Sun className={`h-4 w-4 ${darkMode ? 'text-yellow-400' : 'text-yellow-600'}`} />
+                {darkMode ? (
+                  <Sun className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                ) : (
+                  <Moon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                )}
               </Button>
               
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleRefresh}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <RefreshCw className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
+                <RefreshCw className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               </Button>
               
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleDownload}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <Download className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
+                <Download className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               </Button>
               
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handlePrint}
-                className="flex items-center justify-center"
+                className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <Printer className={`h-4 w-4 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`} />
+                <Printer className="h-4 w-4 text-slate-600 dark:text-slate-400" />
               </Button>
             </div>
           </div>
@@ -133,19 +137,19 @@ const BidSheetViewer = () => {
 
       {/* Main content */}
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 print-container">
-        <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none print:bg-white page`}>
+        <Card className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white'} shadow-lg print:shadow-none print:border-none print:bg-white page`}>
           <div className="p-6 print:p-0">
             {/* Project title */}
-            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
-              <h1 className={`text-sm font-bold uppercase ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black text-left`}>
+            <div className="mb-6 print:mb-8 print:mt-8 print:break-inside-avoid print:break-after-avoid">
+              <h1 className={`text-lg print:text-xl font-bold uppercase ${darkMode ? 'text-slate-100' : 'text-slate-900'} print:text-black text-left`}>
                 COMMERCIAL CONSTRUCTION PROJECT BID SHEET
               </h1>
             </div>
 
             {/* Document header */}
-            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
-              <div className="text-left border-b-2 border-blue-600 pb-3 print:pb-2">
-                <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:text-black space-y-1`}>
+            <div className="mb-4 print:mb-6 print:break-inside-avoid print:break-after-avoid">
+              <div className="text-left border-b border-slate-300 print:border-slate-400 pb-3 print:pb-4">
+                <div className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'} print:text-black space-y-1`}>
                   <p><strong>Location:</strong> 123 Business District, Downtown</p>
                   <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
                   <p><strong>Prepared by:</strong> ABC Construction Co.</p>
@@ -157,9 +161,9 @@ const BidSheetViewer = () => {
               </div>
             </div>
 
-            {/* Grand total - with no page break after */}
-            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
-              <div className="bg-blue-600 text-white rounded-lg p-2 grand-total-print">
+            {/* Grand total - with spacing above and below */}
+            <div className="mb-4 print:mb-6 print:mt-6 print:break-inside-avoid print:break-after-avoid">
+              <div className="bg-slate-900 dark:bg-slate-800 text-white rounded-lg p-2 grand-total-print">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>
                   <span className="text-lg font-bold">{formatCurrency(calculateGrandTotal())}</span>

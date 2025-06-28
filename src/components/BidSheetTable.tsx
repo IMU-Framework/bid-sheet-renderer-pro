@@ -97,10 +97,8 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
             <AccordionTrigger className={`px-4 py-3 ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-150'} rounded-t-lg [&[data-state=closed]]:rounded-lg print:break-inside-avoid`}>
               <div className="flex justify-between items-center w-full mr-4">
                 <div className="text-left">
-                  <div className={`font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-800'} text-xs md:text-sm uppercase flex items-center gap-2`}>
+                  <div className={`font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-800'} text-xs md:text-sm uppercase`}>
                     {group.category}
-                    {/* Mobile chevron hint */}
-                    <ChevronDown className="h-3 w-3 md:hidden opacity-60" />
                   </div>
                   {/* Desktop description - hidden on mobile */}
                   {group.description && (
@@ -139,9 +137,15 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
                           <td className={`border border-gray-300 px-1 md:px-3 py-2 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:border-gray-400 print:text-black text-center`}>
                             {groupIndex + 1}.{itemIndex + 1}
                           </td>
-                          <td className={`border border-gray-300 px-1 md:px-3 py-2 print:border-gray-400`}>
-                            <div className={`text-xs font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black`}>
-                              {item.name}
+                          <td className={`border border-gray-300 px-1 md:px-3 py-2 print:border-gray-400 relative`}>
+                            <div className="flex items-center justify-between">
+                              <div className={`text-xs font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black`}>
+                                {item.name}
+                              </div>
+                              {/* Mobile chevron hint - positioned at the right of the item */}
+                              {item.specification && (
+                                <ChevronDown className={`h-3 w-3 md:hidden print:hidden opacity-60 ml-2 transform transition-transform ${expandedItems.has(item.id) ? 'rotate-180' : ''} ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+                              )}
                             </div>
                             {/* Desktop specification - hidden on mobile unless expanded */}
                             {item.specification && (
