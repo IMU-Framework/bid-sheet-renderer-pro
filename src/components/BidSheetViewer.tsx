@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Printer, Download, RefreshCw, Sun } from 'lucide-react';
+import { Printer, Download, RefreshCw, Sun, Filter } from 'lucide-react';
 import BidSheetTable from './BidSheetTable';
 import BidSheetFilter from './BidSheetFilter';
 import { mockBidData } from '@/data/mockBidData';
@@ -67,14 +67,29 @@ const BidSheetViewer = () => {
       {/* Header with controls */}
       <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end items-center h-12">
-            <div className="flex items-center space-x-2">
+          <div className="flex justify-between items-center h-12">
+            {/* Mobile: Filter on left */}
+            <div className="flex items-center md:hidden">
               <BidSheetFilter
                 categories={allCategories}
                 selectedCategories={selectedCategories}
                 onCategoryChange={handleCategoryChange}
                 darkMode={darkMode}
+                isMobile={true}
               />
+            </div>
+            
+            <div className="flex items-center space-x-2 ml-auto">
+              {/* Desktop: Filter */}
+              <div className="hidden md:block">
+                <BidSheetFilter
+                  categories={allCategories}
+                  selectedCategories={selectedCategories}
+                  onCategoryChange={handleCategoryChange}
+                  darkMode={darkMode}
+                  isMobile={false}
+                />
+              </div>
               
               <Button
                 variant="ghost"
@@ -117,13 +132,13 @@ const BidSheetViewer = () => {
       </div>
 
       {/* Main content */}
-      <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none page`}>
-          <div className="p-6 print:p-4">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 print-container">
+        <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none print:bg-white page`}>
+          <div className="p-6 print:p-0">
             {/* Document header */}
             <div className="mb-4 print:mb-6">
               <div className="text-left border-b-2 border-blue-600 pb-3 print:break-inside-avoid">
-                <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} space-y-1`}>
+                <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:text-black space-y-1`}>
                   <p><strong>Location:</strong> 123 Business District, Downtown</p>
                   <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
                   <p><strong>Prepared by:</strong> ABC Construction Co.</p>
@@ -135,9 +150,9 @@ const BidSheetViewer = () => {
               </div>
             </div>
 
-            {/* Grand total - moved before first group with reduced height */}
-            <div className="mb-4 print:break-inside-avoid">
-              <div className="bg-blue-600 text-white rounded-lg p-2 print:bg-black print:text-white print:border print:border-black">
+            {/* Grand total - with no page break after */}
+            <div className="mb-4 print:break-inside-avoid print:break-after-avoid">
+              <div className="bg-blue-600 text-white rounded-lg p-2 grand-total-print">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>
                   <span className="text-lg font-bold">{formatCurrency(calculateGrandTotal())}</span>

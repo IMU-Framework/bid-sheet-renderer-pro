@@ -107,7 +107,7 @@
 @media print {
   @page {
     size: A4 portrait !important;
-    margin: 20mm !important;
+    margin: 10mm !important;
   }
 
   * {
@@ -135,12 +135,22 @@
     overflow: visible !important;
   }
 
-  .page {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
+  .print-container {
     width: 100% !important;
-    max-width: 170mm !important; /* Account for margins */
+    max-width: 190mm !important;
     margin: 0 auto !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .page {
+    width: 100% !important;
+    max-width: 190mm !important;
+    margin: 0 auto !important;
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
   }
 
   /* Hide all non-printable elements */
@@ -165,8 +175,17 @@
     page-break-inside: avoid !important;
   }
 
+  .print\:break-after-avoid {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
   .print\:p-4 {
     padding: 1rem !important;
+  }
+
+  .print\:p-0 {
+    padding: 0 !important;
   }
 
   .print\:mb-8 {
@@ -177,12 +196,20 @@
     font-size: 0.75rem !important;
   }
 
+  .print\:bg-white {
+    background-color: white !important;
+  }
+
   .print\:bg-black {
     background-color: black !important;
   }
 
   .print\:text-white {
     color: white !important;
+  }
+
+  .print\:text-black {
+    color: black !important;
   }
 
   .print\:border {
@@ -237,12 +264,15 @@
     color: black !important;
   }
 
-  /* Grand total styling for print */
-  .bg-blue-600 {
+  /* Grand total styling for print - no page break after */
+  .grand-total-print {
     background-color: black !important;
     color: white !important;
     border: 2px solid black !important;
     padding: 8px !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+    margin-bottom: 1rem !important;
   }
 
   /* Accordion styling for print */
@@ -279,5 +309,14 @@
   .container {
     width: 100% !important;
     max-width: none !important;
+  }
+
+  /* Hide gray background for print */
+  .bg-gray-50 {
+    background-color: white !important;
+  }
+
+  .dark .bg-gray-900 {
+    background-color: white !important;
   }
 }

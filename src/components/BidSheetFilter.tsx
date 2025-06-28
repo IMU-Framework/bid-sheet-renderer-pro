@@ -14,14 +14,20 @@ interface BidSheetFilterProps {
   selectedCategories: string[];
   onCategoryChange: (category: string, checked: boolean) => void;
   darkMode?: boolean;
+  isMobile?: boolean;
 }
 
 const BidSheetFilter = ({ 
   categories, 
   selectedCategories, 
   onCategoryChange, 
-  darkMode = false 
+  darkMode = false,
+  isMobile = false
 }: BidSheetFilterProps) => {
+  // Calculate the maximum line length for mobile width adjustment
+  const maxLineLength = Math.max(...categories.map(cat => cat.length));
+  const mobileWidth = Math.min(Math.max(maxLineLength * 8 + 32, 200), 300);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,8 +40,9 @@ const BidSheetFilter = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
-        align="end" 
-        className={`w-56 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+        align={isMobile ? "start" : "end"}
+        className={`${isMobile ? `ml-4` : 'w-56'} ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
+        style={isMobile ? { width: `${mobileWidth}px` } : {}}
       >
         {categories.map((category) => (
           <DropdownMenuCheckboxItem
