@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -63,7 +62,7 @@ const BidSheetViewer = () => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'}`}>
+    <div className={`min-h-screen ${darkMode ? 'dark bg-slate-950' : 'bg-slate-50'} print:bg-white`}>
       {/* Header with controls */}
       <div className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -98,9 +97,9 @@ const BidSheetViewer = () => {
                 className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 {darkMode ? (
-                  <Sun className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                  <Sun className="h-4 w-4 text-slate-600 dark:text-slate-300" />
                 ) : (
-                  <Moon className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                  <Moon className="h-4 w-4 text-slate-600 dark:text-slate-300" />
                 )}
               </Button>
               
@@ -110,7 +109,7 @@ const BidSheetViewer = () => {
                 onClick={handleRefresh}
                 className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <RefreshCw className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                <RefreshCw className="h-4 w-4 text-slate-600 dark:text-slate-300" />
               </Button>
               
               <Button
@@ -119,7 +118,7 @@ const BidSheetViewer = () => {
                 onClick={handleDownload}
                 className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <Download className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                <Download className="h-4 w-4 text-slate-600 dark:text-slate-300" />
               </Button>
               
               <Button
@@ -128,7 +127,7 @@ const BidSheetViewer = () => {
                 onClick={handlePrint}
                 className="flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-800"
               >
-                <Printer className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+                <Printer className="h-4 w-4 text-slate-600 dark:text-slate-300" />
               </Button>
             </div>
           </div>
@@ -140,15 +139,15 @@ const BidSheetViewer = () => {
         <Card className={`${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white'} shadow-lg print:shadow-none print:border-none print:bg-white page`}>
           <div className="p-6 print:p-0">
             {/* Project title */}
-            <div className="mb-6 print:mb-8 print:mt-8 print:break-inside-avoid print:break-after-avoid">
-              <h1 className={`text-lg print:text-xl font-bold uppercase ${darkMode ? 'text-slate-100' : 'text-slate-900'} print:text-black text-left`}>
-                COMMERCIAL CONSTRUCTION PROJECT BID SHEET
+            <div className="mb-6 print:mb-8 print:mt-16 print:break-inside-avoid print:break-after-avoid">
+              <h1 className={`text-lg print:text-2xl font-bold uppercase ${darkMode ? 'text-slate-100' : 'text-slate-900'} print:text-black text-left`}>
+                COMMERCIAL CONSTRUCTION PROJECT
               </h1>
             </div>
 
             {/* Document header */}
             <div className="mb-4 print:mb-6 print:break-inside-avoid print:break-after-avoid">
-              <div className="text-left border-b border-slate-300 print:border-slate-400 pb-3 print:pb-4">
+               <div className="text-left border-b border-slate-300 print:border-slate-300 pb-3 print:pb-6">
                 <div className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'} print:text-black space-y-1`}>
                   <p><strong>Location:</strong> 123 Business District, Downtown</p>
                   <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
@@ -162,7 +161,7 @@ const BidSheetViewer = () => {
             </div>
 
             {/* Grand total - with spacing above and below */}
-            <div className="mb-4 print:mb-6 print:mt-6 print:break-inside-avoid print:break-after-avoid">
+            <div className="mb-4 print:mb-6 print:mt-8 print:break-inside-avoid print:break-after-avoid">
               <div className="bg-slate-900 dark:bg-slate-800 text-white rounded-lg p-2 grand-total-print">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>

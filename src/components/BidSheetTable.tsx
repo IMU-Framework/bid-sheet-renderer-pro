@@ -18,7 +18,6 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
 
   const formatCurrency = (amount: number) => {
-    // Remove trailing zeroes by converting to number then back to formatted string
     const formatted = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
@@ -42,20 +41,20 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
 
   // Mobile column headers (without Unit column, text-xs size)
   const MobileColumnHeaders = () => (
-    <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
+    <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'} print:bg-gray-100`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-8 print:border-gray-600`}>
         #
       </th>
-      <th className={`border border-gray-400 px-1 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider print:border-gray-600`}>
         Item
       </th>
-      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-20 print:border-gray-600`}>
         Qty
       </th>
-      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-20 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-20 print:border-gray-600`}>
         Unit Price
       </th>
-      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-1 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-24 print:border-gray-600`}>
         Total
       </th>
     </tr>
@@ -63,23 +62,23 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
 
   // Desktop column headers (with Unit column)
   const DesktopColumnHeaders = () => (
-    <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'}`}>
-      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-8 print:border-gray-600`}>
+    <tr className={`${darkMode ? 'bg-gray-700' : 'bg-blue-50'} print:bg-gray-100`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-8 print:border-gray-600`}>
         #
       </th>
-      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider print:border-gray-600`}>
         Item Description
       </th>
-      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-center text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-16 print:border-gray-600`}>
         Qty
       </th>
-      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-16 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-left text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-16 print:border-gray-600`}>
         Unit
       </th>
-      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-24 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-24 print:border-gray-600`}>
         Unit Price
       </th>
-      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} uppercase tracking-wider w-28 print:border-gray-600`}>
+      <th className={`border border-gray-400 px-3 py-0.5 text-right text-xs font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black uppercase tracking-wider w-28 print:border-gray-600`}>
         Total
       </th>
     </tr>
@@ -93,21 +92,21 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
         className="space-y-4"
       >
         {data.map((group, groupIndex) => (
-          <AccordionItem key={group.id} value={group.id} className={`border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'} print:break-inside-avoid`}>
-            <AccordionTrigger className={`px-4 py-3 ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-150'} rounded-t-lg [&[data-state=closed]]:rounded-lg print:break-inside-avoid`}>
+          <AccordionItem key={group.id} value={group.id} className={`border rounded-lg ${darkMode ? 'border-gray-600' : 'border-gray-200'} print:border-gray-300 print:break-inside-avoid`}>
+            <AccordionTrigger className={`px-4 py-3 ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-150'} print:bg-gray-100 rounded-t-lg [&[data-state=closed]]:rounded-lg print:break-inside-avoid`}>
               <div className="flex justify-between items-center w-full mr-4">
                 <div className="text-left">
-                  <div className={`font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-800'} text-xs md:text-sm uppercase`}>
+                  <div className={`font-semibold ${darkMode ? 'text-gray-100' : 'text-gray-800'} print:text-black text-xs md:text-sm uppercase`}>
                     {group.category}
                   </div>
                   {/* Desktop description - hidden on mobile */}
                   {group.description && (
-                    <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} mt-1 hidden md:block print:block`}>
+                    <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:text-black mt-1 hidden md:block print:block`}>
                       {group.description}
                     </div>
                   )}
                 </div>
-                <div className={`text-xs md:text-sm font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'}`}>
+                <div className={`text-xs md:text-sm font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-700'} print:text-black`}>
                   Subtotal: {formatCurrency(group.subtotal)}
                 </div>
               </div>
@@ -131,7 +130,7 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
                     {group.items.map((item, itemIndex) => (
                       <React.Fragment key={item.id}>
                         <tr
-                          className={`${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} print:break-inside-avoid cursor-pointer md:cursor-default`}
+                          className={`${darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-50'} print:hover:bg-white print:break-inside-avoid cursor-pointer md:cursor-default`}
                           onClick={() => window.innerWidth < 768 ? toggleItemExpansion(item.id) : undefined}
                         >
                           <td className={`border border-gray-300 px-1 md:px-3 py-2 text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:border-gray-400 print:text-black text-center`}>
@@ -139,23 +138,25 @@ const BidSheetTable = ({ data, darkMode = false }: BidSheetTableProps) => {
                           </td>
                           <td className={`border border-gray-300 px-1 md:px-3 py-2 print:border-gray-400 relative`}>
                             <div className="flex items-center justify-between">
-                              <div className={`text-xs font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black`}>
+                              <div className={`text-xs font-medium ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black flex-1 pr-2`}>
                                 {item.name}
                               </div>
-                              {/* Mobile chevron hint - positioned at the right of the item */}
+                              {/* Mobile chevron hint - fixed size and positioned at the right */}
                               {item.specification && (
-                                <ChevronDown className={`h-3 w-3 md:hidden print:hidden opacity-60 ml-2 transform transition-transform ${expandedItems.has(item.id) ? 'rotate-180' : ''} ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+                                <div className="md:hidden print:hidden flex-shrink-0">
+                                  <ChevronDown className={`h-3 w-3 opacity-60 transform transition-transform ${expandedItems.has(item.id) ? 'rotate-180' : ''} ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
+                                </div>
                               )}
                             </div>
                             {/* Desktop specification - hidden on mobile unless expanded */}
                             {item.specification && (
-                              <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} mt-1 print:text-black hidden md:block print:block`}>
+                              <div className={`text-xs ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:text-black mt-1 hidden md:block print:block`}>
                                 {item.specification}
                               </div>
                             )}
                           </td>
                           {/* Mobile: Qty + Unit combined */}
-                          <td className={`border border-gray-300 px-1 py-2 text-xs ${darkMode ? 'text-gray-200' : 'text-gray-900'} text-center md:hidden print:hidden`}>
+                          <td className={`border border-gray-300 px-1 py-2 text-xs ${darkMode ? 'text-gray-200' : 'text-gray-900'} print:text-black text-center md:hidden print:hidden`}>
                             {item.quantity} {item.unit}
                           </td>
                           {/* Desktop: Separate Qty and Unit columns */}

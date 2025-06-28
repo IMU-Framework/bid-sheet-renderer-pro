@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+/* ... keep existing code (design system CSS variables) the same ... */
 
 @layer base {
   :root {
@@ -114,6 +114,7 @@
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     box-sizing: border-box !important;
+    color: black !important;
   }
 
   html {
@@ -200,6 +201,10 @@
     margin-bottom: 0.5rem !important;
   }
 
+  .print\:mt-16 {
+    margin-top: 4rem !important;
+  }
+
   .print\:mt-8 {
     margin-top: 2rem !important;
   }
@@ -210,6 +215,10 @@
 
   .print\:pb-2 {
     padding-bottom: 0.5rem !important;
+  }
+
+  .print\:pb-6 {
+    padding-bottom: 1.5rem !important;
   }
 
   .print\:pb-4 {
@@ -224,12 +233,20 @@
     font-size: 1.25rem !important;
   }
 
+  .print\:text-2xl {
+    font-size: 1.5rem !important;
+  }
+
   .print\:bg-white {
     background-color: white !important;
   }
 
   .print\:bg-black {
     background-color: black !important;
+  }
+
+  .print\:bg-gray-100 {
+    background-color: #f3f4f6 !important;
   }
 
   .print\:text-white {
@@ -240,6 +257,10 @@
     color: black !important;
   }
 
+  .print\:hover\:bg-white:hover {
+    background-color: white !important;
+  }
+
   .print\:border {
     border: 2px solid !important;
   }
@@ -248,8 +269,16 @@
     border-color: black !important;
   }
 
+  .print\:border-gray-300 {
+    border-color: #d1d5db !important;
+  }
+
   .print\:border-gray-400 {
     border-color: #9ca3af !important;
+  }
+
+  .print\:border-slate-300 {
+    border-color: #cbd5e1 !important;
   }
 
   .print\:border-slate-400 {
@@ -305,7 +334,7 @@
     break-after: avoid !important;
     page-break-after: avoid !important;
     margin-bottom: 1.5rem !important;
-    margin-top: 1.5rem !important;
+    margin-top: 2rem !important;
   }
 
   /* Accordion styling for print */
