@@ -192,6 +192,14 @@
     margin-bottom: 2rem !important;
   }
 
+  .print\:mb-2 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .print\:pb-2 {
+    padding-bottom: 0.5rem !important;
+  }
+
   .print\:text-xs {
     font-size: 0.75rem !important;
   }
@@ -272,7 +280,7 @@
     padding: 8px !important;
     break-after: avoid !important;
     page-break-after: avoid !important;
-    margin-bottom: 1rem !important;
+    margin-bottom: 0.5rem !important;
   }
 
   /* Accordion styling for print */
@@ -318,5 +326,11 @@
 
   .dark .bg-gray-900 {
     background-color: white !important;
+  }
+
+  /* Prevent page breaks between related sections */
+  h1 + div {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
   }
 }

@@ -24,12 +24,19 @@ const BidSheetFilter = ({
   darkMode = false,
   isMobile = false
 }: BidSheetFilterProps) => {
+  const [open, setOpen] = useState(false);
+
   // Calculate the maximum line length for mobile width adjustment
   const maxLineLength = Math.max(...categories.map(cat => cat.length));
   const mobileWidth = Math.min(Math.max(maxLineLength * 8 + 32, 200), 300);
 
+  const handleCheckedChange = (category: string, checked: boolean) => {
+    onCategoryChange(category, checked);
+    // Don't close the dropdown after check/uncheck
+  };
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -43,13 +50,16 @@ const BidSheetFilter = ({
         align={isMobile ? "start" : "end"}
         className={`${isMobile ? `ml-4` : 'w-56'} ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}
         style={isMobile ? { width: `${mobileWidth}px` } : {}}
+        onPointerDownOutside={() => setOpen(false)}
+        onEscapeKeyDown={() => setOpen(false)}
       >
         {categories.map((category) => (
           <DropdownMenuCheckboxItem
             key={category}
             checked={selectedCategories.includes(category)}
-            onCheckedChange={(checked) => onCategoryChange(category, checked)}
+            onCheckedChange={(checked) => handleCheckedChange(category, checked)}
             className={`${darkMode ? 'text-gray-200 hover:bg-gray-700' : 'text-gray-900 hover:bg-gray-50'}`}
+            onSelect={(e) => e.preventDefault()}
           >
             {category}
           </DropdownMenuCheckboxItem>

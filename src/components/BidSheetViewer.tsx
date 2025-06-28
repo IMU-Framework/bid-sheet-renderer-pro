@@ -135,9 +135,16 @@ const BidSheetViewer = () => {
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 print-container">
         <Card className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} shadow-lg print:shadow-none print:border-none print:bg-white page`}>
           <div className="p-6 print:p-0">
+            {/* Project title */}
+            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
+              <h1 className={`text-sm font-bold uppercase ${darkMode ? 'text-gray-100' : 'text-gray-900'} print:text-black text-left`}>
+                COMMERCIAL CONSTRUCTION PROJECT BID SHEET
+              </h1>
+            </div>
+
             {/* Document header */}
-            <div className="mb-4 print:mb-6">
-              <div className="text-left border-b-2 border-blue-600 pb-3 print:break-inside-avoid">
+            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
+              <div className="text-left border-b-2 border-blue-600 pb-3 print:pb-2">
                 <div className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-600'} print:text-black space-y-1`}>
                   <p><strong>Location:</strong> 123 Business District, Downtown</p>
                   <p><strong>Date:</strong> {new Date().toLocaleDateString()}</p>
@@ -151,7 +158,7 @@ const BidSheetViewer = () => {
             </div>
 
             {/* Grand total - with no page break after */}
-            <div className="mb-4 print:break-inside-avoid print:break-after-avoid">
+            <div className="mb-4 print:mb-2 print:break-inside-avoid print:break-after-avoid">
               <div className="bg-blue-600 text-white rounded-lg p-2 grand-total-print">
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold">GRAND TOTAL:</span>
