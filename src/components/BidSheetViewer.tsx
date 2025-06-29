@@ -4,35 +4,41 @@ import { Printer, Download, RefreshCw, Moon, Sun } from 'lucide-react';
 import BidSheetTable from './BidSheetTable';
 import BidSheetFilter from './BidSheetFilter';
 import { mockBidData } from '@/data/mockBidData';
+
 const BidSheetViewer = () => {
   const [darkMode, setDarkMode] = useState(false);
-
+  
   // Get all unique categories from the data
   const allCategories = useMemo(() => {
     return [...new Set(mockBidData.map(group => group.category))];
   }, []);
-
+  
   // Initialize with all categories selected
   const [selectedCategories, setSelectedCategories] = useState<string[]>(allCategories);
-
+  
   // Filter data based on selected categories
   const filteredData = useMemo(() => {
     return mockBidData.filter(group => selectedCategories.includes(group.category));
   }, [selectedCategories]);
+
   const handlePrint = () => {
     window.print();
   };
+
   const handleDownload = () => {
     // For now, just trigger print dialog - can be enhanced later
     window.print();
   };
+
   const handleRefresh = () => {
     // Will implement clear cache and reload functionality later
     window.location.reload();
   };
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
   const handleCategoryChange = (category: string, checked: boolean) => {
     if (checked) {
       setSelectedCategories(prev => [...prev, category]);
@@ -40,9 +46,11 @@ const BidSheetViewer = () => {
       setSelectedCategories(prev => prev.filter(cat => cat !== category));
     }
   };
+
   const calculateGrandTotal = () => {
     return filteredData.reduce((total, group) => total + group.subtotal, 0);
   };
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -51,35 +59,73 @@ const BidSheetViewer = () => {
       maximumFractionDigits: 2
     }).format(amount);
   };
-  return <div className="">
+
+  return (
+    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900' : 'bg-gray-50'} print:bg-white`}>
       {/* Header with controls */}
       <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             {/* Mobile: Filter on left */}
             <div className="flex items-center md:hidden">
-              <BidSheetFilter categories={allCategories} selectedCategories={selectedCategories} onCategoryChange={handleCategoryChange} darkMode={darkMode} isMobile={true} />
+              <BidSheetFilter
+                categories={allCategories}
+                selectedCategories={selectedCategories}
+                onCategoryChange={handleCategoryChange}
+                darkMode={darkMode}
+                isMobile={true}
+              />
             </div>
             
             <div className="flex items-center space-x-2 ml-auto">
               {/* Desktop: Filter */}
               <div className="hidden md:block">
-                <BidSheetFilter categories={allCategories} selectedCategories={selectedCategories} onCategoryChange={handleCategoryChange} darkMode={darkMode} isMobile={false} />
+                <BidSheetFilter
+                  categories={allCategories}
+                  selectedCategories={selectedCategories}
+                  onCategoryChange={handleCategoryChange}
+                  darkMode={darkMode}
+                  isMobile={false}
+                />
               </div>
               
-              <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                {darkMode ? <Moon className="h-4 w-4 text-gray-600 dark:text-gray-300" /> : <Sun className="h-4 w-4 text-gray-600 dark:text-gray-300" />}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleDarkMode}
+                className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
+                {darkMode ? (
+                  <Moon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                ) : (
+                  <Sun className="h-4 w-4 text-gray-600 dark:text-gray-300" />
+                )}
               </Button>
               
-              <Button variant="ghost" size="icon" onClick={handleRefresh} className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleRefresh}
+                className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
                 <RefreshCw className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </Button>
               
-              <Button variant="ghost" size="icon" onClick={handleDownload} className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleDownload}
+                className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
                 <Download className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </Button>
               
-              <Button variant="ghost" size="icon" onClick={handlePrint} className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handlePrint}
+                className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              >
                 <Printer className="h-4 w-4 text-gray-600 dark:text-gray-300" />
               </Button>
             </div>
@@ -128,6 +174,8 @@ const BidSheetViewer = () => {
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
+
 export default BidSheetViewer;
