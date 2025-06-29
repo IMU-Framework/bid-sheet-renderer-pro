@@ -181,6 +181,10 @@
     page-break-after: avoid !important;
   }
 
+  .print\:rounded-none {
+    border-radius: 0 !important;
+  }
+
   .print\:p-4 {
     padding: 1rem !important;
   }
@@ -201,8 +205,16 @@
     margin-bottom: 0.5rem !important;
   }
 
+  .print\:mt-24 {
+    margin-top: 6rem !important;
+  }
+
   .print\:mt-16 {
     margin-top: 4rem !important;
+  }
+
+  .print\:mt-12 {
+    margin-top: 3rem !important;
   }
 
   .print\:mt-8 {
@@ -235,6 +247,10 @@
 
   .print\:text-2xl {
     font-size: 1.5rem !important;
+  }
+
+  .print\:text-3xl {
+    font-size: 1.875rem !important;
   }
 
   .print\:bg-white {
@@ -321,11 +337,11 @@
   th {
     background-color: #f3f4f6 !important;
     font-weight: bold !important;
-    border: 1px solid #4b5563 !important;
+    border: 0.5px solid #9ca3af !important;
     color: black !important;
   }
 
-  /* Grand total styling for print - no page break after */
+  /* Grand total styling for print - white text */
   .grand-total-print {
     background-color: black !important;
     color: white !important;
@@ -334,14 +350,19 @@
     break-after: avoid !important;
     page-break-after: avoid !important;
     margin-bottom: 1.5rem !important;
-    margin-top: 2rem !important;
+    margin-top: 3rem !important;
   }
 
-  /* Accordion styling for print */
+  .grand-total-print * {
+    color: white !important;
+  }
+
+  /* Accordion styling for print - remove borders */
   [data-radix-accordion-item] {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
     margin-bottom: 1rem !important;
+    border: none !important;
   }
 
   /* Force accordion content to be visible in print */
@@ -355,7 +376,8 @@
     background-color: #f3f4f6 !important;
     color: black !important;
     padding: 8px !important;
-    border: 1px solid #4b5563 !important;
+    border: none !important;
+    border-radius: 0 !important;
   }
 
   /* Prevent content overflow */
@@ -374,11 +396,13 @@
   }
 
   /* Hide backgrounds for print */
-  .bg-slate-50 {
+  .bg-slate-50,
+  .bg-gray-50 {
     background-color: white !important;
   }
 
-  .dark .bg-slate-950 {
+  .dark .bg-slate-950,
+  .dark .bg-gray-900 {
     background-color: white !important;
   }
 
