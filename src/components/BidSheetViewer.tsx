@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Printer, Download, RefreshCw, Moon, Sun } from 'lucide-react';
@@ -66,40 +67,27 @@ const BidSheetViewer = () => {
       <div className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-b sticky top-0 z-40 print:hidden`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
-            {/* Mobile: Filter on left */}
-            <div className="flex items-center md:hidden">
+            {/* Filter - always on left for all screen sizes */}
+            <div className="flex items-center">
               <BidSheetFilter
                 categories={allCategories}
                 selectedCategories={selectedCategories}
                 onCategoryChange={handleCategoryChange}
                 darkMode={darkMode}
-                isMobile={true}
+                isMobile={false}
               />
             </div>
             
-            <div className="flex items-center space-x-2 ml-auto">
-              {/* Desktop: Filter */}
-              <div className="hidden md:block">
-                <BidSheetFilter
-                  categories={allCategories}
-                  selectedCategories={selectedCategories}
-                  onCategoryChange={handleCategoryChange}
-                  darkMode={darkMode}
-                  isMobile={false}
-                />
-              </div>
-              
+            <div className="flex items-center space-x-2">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={toggleDarkMode}
-                className="flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                className="h-9 w-9"
               >
-                {darkMode ? (
-                  <Moon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                ) : (
-                  <Sun className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-                )}
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
               </Button>
               
               <Button
@@ -133,7 +121,7 @@ const BidSheetViewer = () => {
         </div>
       </div>
 
-      {/* Main content - removed card container */}
+      {/* Main content */}
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 print:p-0 print-container">
         <div className="print:mt-16">
           {/* Project title */}
@@ -158,7 +146,7 @@ const BidSheetViewer = () => {
             </div>
           </div>
 
-          {/* Grand total - with more spacing */}
+          {/* Grand total */}
           <div className="mb-4 print:mb-6 print:mt-12 print:break-inside-avoid print:break-after-avoid">
             <div className="bg-gray-900 dark:bg-gray-800 text-white rounded-lg p-2 grand-total-print">
               <div className="flex justify-between items-center">
